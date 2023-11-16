@@ -21,8 +21,8 @@
                 <div class="flex justify-center">
                     <h1><b>Hi-Lo Game</b></h1>
                 </div> 
-                <div class="flex justify-center cardContainer">
-                    <p>Current Card:</p>
+                <div class="flex justify-center" id="cardContainer">
+                    <p>Current Card: </p>
                 </div> 
             </div>
         </div>
@@ -50,6 +50,22 @@
                     .then(cardsDecoded => {
                         // Process the shuffled array
                         console.log(cardsDecoded.shuffledCards); // Print shuffled cards to console for debugging
+
+                        // Add first card to page
+                        const firstCard = Object.values(cardsDecoded.shuffledCards[0]); // Get First Card
+                        console.log(firstCard[1]); // Log suit for debugging
+                        console.log(firstCard[0]); // Log value for debugging
+                        const cardContainer = document.getElementById('cardContainer');
+
+                        const firstCardValue = firstCard[0];
+                        const cardValue = document.createElement('div');
+                        cardValue.textContent = firstCardValue;
+                        cardContainer.appendChild(cardValue);
+
+                        const firstCardSuit = firstCard[1];
+                        const cardSuit = document.createElement('div');
+                        cardSuit.textContent = firstCardSuit;
+                        cardContainer.appendChild(cardSuit);
                     })
                     .catch(error => {
                         console.error('Error fetching shuffled cards:', error);
