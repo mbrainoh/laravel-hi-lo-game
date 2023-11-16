@@ -34,11 +34,29 @@
                     .then(response => response.json())
                     .then(cardsJson => {
                         console.log(cardsJson);
+                        shuffleCards(cardsJson);
                     })
                     .catch(error => {
                         console.error('Error fetching cards:', error);
                     });
             });
+
+
+            // Function to shuffle the cards
+            function shuffleCards(cardsJson) {
+                cardsJson = JSON.stringify(cardsJson);
+                fetch(`/api/shufflecards/${encodeURIComponent(cardsJson)}`)
+                    .then(response => response.json())
+                    .then(cardsDecoded => {
+                        // Process the shuffled array
+                        console.log(cardsDecoded.shuffledCards); // Print shuffled cards to console for debugging
+                    })
+                    .catch(error => {
+                        console.error('Error fetching shuffled cards:', error);
+                    });
+            };
+
+
         </script>
 
     </body>

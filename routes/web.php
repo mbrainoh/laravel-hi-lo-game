@@ -24,6 +24,16 @@ Route::get('/api/cards', function () {
         $response = Http::withOptions(['verify' => false])->get('https://higherorlower-api.netlify.app/json'); // disable SSL verification (do not do in prod)
         return $response->json();
     } catch (\Exception $e) {
-        console.log($e);
+        return response()->json(['error' => 'Internal Server Error'], 500);
+    }
+});
+
+Route::get('/api/shufflecards/{cardsJson}', function ($cardsJson) {
+    try {
+        $cardsDecoded = json_decode($cardsJson, true);
+        shuffle($cardsDecoded);
+        return response()->json(['shuffledCards' => $cardsDecoded]); // Return shuffled cards
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Internal Server Error'], 500);
     }
 });
